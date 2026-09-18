@@ -1,0 +1,253 @@
+/* ===== Vídeo do sorteio (dentro do modal) ===== */
+.video-box {
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 209, 102, 0.24);
+  background: linear-gradient(160deg, rgba(255, 209, 102, 0.09), rgba(124, 92, 255, 0.09));
+  text-align: left;
+}
+.modal.is-open .video-box {
+  animation: fadeUp 0.5s 0.7s var(--smooth) both;
+}
+.video-box__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.video-box__head .i {
+  color: var(--gold);
+}
+.video-box__title {
+  font: 600 1rem/1.2 var(--font-display);
+}
+.video-box__tag {
+  margin-left: auto;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #3a2300;
+  background: linear-gradient(135deg, var(--gold), var(--primary-2));
+}
+
+.video-box__body {
+  display: none;
+  margin-top: 12px;
+}
+.video-box[data-state='idle'] [data-when='idle'],
+.video-box[data-state='rendering'] [data-when='rendering'],
+.video-box[data-state='error'] [data-when='error'] {
+  display: block;
+}
+.video-box[data-state='done'] [data-when='done'] {
+  display: flex;
+}
+.video-box__body[data-when] {
+  animation: fadeUp 0.35s var(--smooth) both;
+}
+.video-box__hint {
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+  color: var(--text-2);
+}
+
+.video-box__formats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.format-btn {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 56px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  text-align: left;
+  transition: transform 0.2s var(--spring), border-color 0.25s, background 0.25s, box-shadow 0.25s;
+}
+.format-btn:hover:not(:disabled) {
+  border-color: rgba(255, 209, 102, 0.6);
+  background: rgba(255, 209, 102, 0.1);
+  box-shadow: 0 10px 26px -14px rgba(255, 209, 102, 0.8);
+  transform: translateY(-2px);
+}
+.format-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.format-btn:focus-visible {
+  outline: 3px solid rgba(255, 209, 102, 0.75);
+  outline-offset: 2px;
+}
+.format-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.format-btn__shape {
+  flex: none;
+  width: 17px;
+  height: 30px;
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  background: linear-gradient(160deg, rgba(255, 209, 102, 0.35), rgba(255, 77, 141, 0.25));
+}
+.format-btn__shape--square {
+  width: 26px;
+  height: 26px;
+}
+.format-btn__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+.format-btn__text b {
+  font-size: 0.92rem;
+}
+.format-btn__text small {
+  font-size: 0.7rem;
+  color: var(--text-3);
+}
+
+/* Barra de progresso com listras andando */
+.progress {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.progress__bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.22) 0 8px, transparent 8px 16px),
+    linear-gradient(90deg, var(--primary), var(--gold));
+  background-size: 22.6px 100%, 100% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s linear;
+  animation: stripes 0.6s linear infinite;
+}
+.video-box__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 9px;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+/* Vídeo pronto */
+.video-box__done {
+  align-items: center;
+  gap: 14px;
+}
+.video-box__preview {
+  flex: none;
+  width: 92px;
+  aspect-ratio: 9 / 16;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #000;
+  object-fit: cover;
+  box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.9), 0 0 0 4px rgba(255, 209, 102, 0.12);
+}
+.video-box[data-result='square'] .video-box__preview {
+  width: 118px;
+  aspect-ratio: 1;
+}
+.video-box__result {
+  min-width: 0;
+}
+.video-box__ready {
+  font: 600 1.1rem/1.2 var(--font-display);
+  color: var(--gold);
+}
+.video-box__info {
+  margin: 3px 0 11px;
+  font-size: 0.76rem;
+  color: var(--text-3);
+}
+.video-box__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.video-box__actions .btn {
+  min-height: 38px;
+}
+.video-box__again {
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
+.video-box__error {
+  margin-bottom: 10px;
+  font-size: 0.86rem;
+  color: #ffd3dc;
+}
+
+.btn--gold {
+  color: #3a2300;
+  background: linear-gradient(135deg, #ffe08a, var(--gold) 50%, var(--primary-2));
+  box-shadow: 0 10px 24px -12px rgba(255, 209, 102, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.btn--gold:hover {
+  background: linear-gradient(135deg, #ffe9a8, #ffd97a 50%, #ffae5c);
+}
+
+/* Link na roleta para o vídeo do último sorteio */
+.video-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  animation: fadeUp 0.4s var(--smooth) both;
+}
+.video-link span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.video-link[data-state='rendering'] span {
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+.video-link[data-state='rendering'] .i {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes stripes {
+  to { background-position: 22.6px 0, 0 0; }
+}
+@keyframes pulse {
+  50% { opacity: 0.35; }
+}
+
+@media (max-width: 420px) {
+  .video-box {
+    padding: 14px 12px;
+  }
+  .format-btn {
+    gap: 9px;
+    padding: 9px 10px;
+  }
+  .format-btn__text small {
+    font-size: 0.66rem;
+  }
+  .video-box__preview {
+    width: 80px;
+  }
+  .video-box[data-result='square'] .video-box__preview {
+    width: 100px;
+  }
+}
